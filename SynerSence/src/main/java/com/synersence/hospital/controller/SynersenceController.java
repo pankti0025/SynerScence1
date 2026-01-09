@@ -142,6 +142,7 @@ public class SynersenceController {
         model.addAttribute("fields", fieldService.getAllFields());
         return "field-customize";
     }
+    
     @GetMapping("/prescription")
     public String prescription(
             @RequestParam("patientId") String patientId,
@@ -193,5 +194,5 @@ public class SynersenceController {
 
         return "prescription";
     }
-}
 
+}

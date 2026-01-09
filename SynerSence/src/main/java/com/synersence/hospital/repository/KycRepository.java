@@ -1,7 +1,9 @@
 package com.synersence.hospital.repository;
 
 import com.synersence.hospital.entity.KycRecord;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface KycRepository extends MongoRepository<KycRecord, String> {
+@Repository
+public interface KycRepository extends JpaRepository<KycRecord, Long> {
 }

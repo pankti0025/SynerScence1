@@ -1,23 +1,27 @@
 package com.synersence.hospital.entity;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-@Document(collection = "kyc_records")
+@Entity
+@Table(name = "kyc_record")
 public class KycRecord {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
+    @Column(name = "patient_id", nullable = false)
     private String patientId;
 
-    // TEMP (from frontend)
+    // ❌ TEMP DATA – DO NOT STORE IN DB
+    @Transient
     private String imageBase64;
+
+    @Transient
     private String videoBase64;
 
-    // PERMANENT (saved paths)
+    // ✅ PERMANENT STORAGE PATHS
     private String imagePath;
     private String videoPath;
 
@@ -25,24 +29,59 @@ public class KycRecord {
 
     // ===== getters & setters =====
 
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
+    public Long getId() {
+        return id;
+    }
 
-    public String getPatientId() { return patientId; }
-    public void setPatientId(String patientId) { this.patientId = patientId; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getImageBase64() { return imageBase64; }
-    public void setImageBase64(String imageBase64) { this.imageBase64 = imageBase64; }
+    public String getPatientId() {
+        return patientId;
+    }
 
-    public String getVideoBase64() { return videoBase64; }
-    public void setVideoBase64(String videoBase64) { this.videoBase64 = videoBase64; }
+    public void setPatientId(String patientId) {
+        this.patientId = patientId;
+    }
 
-    public String getImagePath() { return imagePath; }
-    public void setImagePath(String imagePath) { this.imagePath = imagePath; }
+    public String getImageBase64() {
+        return imageBase64;
+    }
 
-    public String getVideoPath() { return videoPath; }
-    public void setVideoPath(String videoPath) { this.videoPath = videoPath; }
+    public void setImageBase64(String imageBase64) {
+        this.imageBase64 = imageBase64;
+    }
 
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    public String getVideoBase64() {
+        return videoBase64;
+    }
+
+    public void setVideoBase64(String videoBase64) {
+        this.videoBase64 = videoBase64;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public String getVideoPath() {
+        return videoPath;
+    }
+
+    public void setVideoPath(String videoPath) {
+        this.videoPath = videoPath;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
 }

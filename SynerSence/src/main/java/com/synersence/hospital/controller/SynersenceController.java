@@ -142,7 +142,7 @@ public class SynersenceController {
         model.addAttribute("fields", fieldService.getAllFields());
         return "field-customize";
     }
-     @GetMapping("/prescription")
+    @GetMapping("/prescription")
     public String prescription(
             @RequestParam("patientId") String patientId,
             Model model) {
@@ -164,6 +164,9 @@ public class SynersenceController {
             // ✅ Age & Weight FROM PatientMaster
             model.addAttribute("age", patient.getAge());
             model.addAttribute("weight", patient.getWeight());
+            System.out.println(">>> AGE FROM DB = " + patient.getAge());
+            System.out.println(">>> WEIGHT FROM DB = " + patient.getWeight());
+
         }
 
         // 2️⃣ FETCH CUSTOM FIELD VALUES (ONLY NON-CORE FIELDS)
@@ -191,3 +194,4 @@ public class SynersenceController {
         return "prescription";
     }
 }
+

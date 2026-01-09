@@ -142,8 +142,7 @@ public class SynersenceController {
         model.addAttribute("fields", fieldService.getAllFields());
         return "field-customize";
     }
-    
-    @GetMapping("/prescription")
+     @GetMapping("/prescription")
     public String prescription(
             @RequestParam("patientId") String patientId,
             Model model) {
@@ -161,9 +160,13 @@ public class SynersenceController {
 
             model.addAttribute("patientName", patient.getPatientName());
             model.addAttribute("gender", patient.getGender());
+
+            // ✅ Age & Weight FROM PatientMaster
+            model.addAttribute("age", patient.getAge());
+            model.addAttribute("weight", patient.getWeight());
         }
 
-        // 2️⃣ FETCH CUSTOM FIELD VALUES
+        // 2️⃣ FETCH CUSTOM FIELD VALUES (ONLY NON-CORE FIELDS)
         List<PatientCustomFieldValue> values =
                 customValueRepo.findByPatientId(patientId);
 
@@ -176,10 +179,7 @@ public class SynersenceController {
 
             System.out.println("Field: " + label + " = " + value);
 
-            if (label.equalsIgnoreCase("Age")) {
-                model.addAttribute("age", value);
-            }
-
+            // ❌ REMOVE AGE FROM CUSTOM FIELDS (VERY IMPORTANT)
             if (label.equalsIgnoreCase("Case No")) {
                 model.addAttribute("caseNo", value);
             }
@@ -190,5 +190,4 @@ public class SynersenceController {
 
         return "prescription";
     }
-
 }

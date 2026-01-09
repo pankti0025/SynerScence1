@@ -22,11 +22,12 @@ public class PatientMaster {
     @Column(name = "VILLAGE")
     private String village;
     
-    @Column(name = "AGE")
-    private Integer age;
+   @Column(name = "age")
+private Integer age;
 
-    @Column(name = "WEIGHT")
-    private Double weight;
+@Column(name = "weight")
+private Double weight;
+
 
 
     // ===== Getters & Setters =====
@@ -84,3 +85,4 @@ public class PatientMaster {
     }
 
 }
+

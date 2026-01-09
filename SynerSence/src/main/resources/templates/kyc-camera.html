@@ -1048,7 +1048,16 @@
                     <span class="label">Gender</span>
                     <span class="value" th:text="${patient.gender}"></span>
                 </div>
+                
             </div>
+             <div class="summary-row">
+                <span class="label">Age</span>
+                    <span class="value" th:text="${patient.age}"></span>
+                </div>
+                 <div class="summary-row">
+                <span class="label">Weight</span>
+                    <span class="value" th:text="${patient.weight} + ' kg'"></span>
+                </div>
             <!-- Dynamic Patient Fields -->
 <div th:if="${dynamicFields != null}">
     <div th:each="entry : ${dynamicFields}">

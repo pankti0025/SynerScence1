@@ -21,6 +21,13 @@ public class PatientMaster {
 
     @Column(name = "VILLAGE")
     private String village;
+    
+    @Column(name = "AGE")
+    private Integer age;
+
+    @Column(name = "WEIGHT")
+    private Double weight;
+
 
     // ===== Getters & Setters =====
     public String getPatientId() {
@@ -62,4 +69,18 @@ public class PatientMaster {
     public void setVillage(String village) {
         this.village = village;
     }
+    public Integer getAge() {
+        return age;
+    }
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public Double getWeight() {
+        return weight;
+    }
+    public void setWeight(Double weight) {
+        this.weight = weight;
+    }
+
 }

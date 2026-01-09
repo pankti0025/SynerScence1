@@ -1,0 +1,137 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f4f6f8;
+}
+
+/* Layout */
+.container {
+    display: flex;
+    min-height: 100vh; /* FIX: avoid cut-off on small screens */
+}
+
+/* Sidebar */
+.sidebar {
+    width: 240px;
+    background: #ffffff;
+    border-right: 1px solid #ddd;
+    padding: 20px;
+}
+
+.sidebar h2 {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.sidebar ul {
+    padding-left: 0;
+}
+
+.sidebar ul li {
+    list-style: none;
+    padding: 10px;
+    cursor: pointer;
+    color: #444;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.sidebar ul li.active,
+.sidebar ul li:hover {
+    background: #e8f0fe;
+    border-radius: 4px;
+}
+
+/* Content */
+.content {
+    flex: 1;
+    padding: 40px;
+    background: #fff;
+    overflow-y: auto; /* FIX: allow scrolling */
+}
+
+.content h1 {
+    margin-bottom: 30px;
+    font-size: 22px;
+}
+
+/* Form */
+.form-group {
+    margin-bottom: 20px;
+    max-width: 420px; /* slight improvement */
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.form-group label span {
+    color: red;
+}
+
+/* Inputs */
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-group textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+/* Checkbox */
+.checkbox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.checkbox input {
+    width: auto;
+}
+
+/* Buttons */
+.buttons {
+    margin-top: 30px;
+}
+
+.btn-save {
+    background: #2f7df6;
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-cancel {
+    background: transparent;
+    border: none;
+    margin-left: 15px;
+    color: #444;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-save:hover {
+    background: #1f66d1;
+}

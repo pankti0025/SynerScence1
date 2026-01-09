@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <link rel="manifest" href="/manifest.json">
+    
+</head>
+
+<body>
+
+<!-- Header -->
+<header class="header">
+    <div class="logo-container">
+        <button class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="logo-icon">S</div>
+        <div class="logo-text">SYNERSENCE</div>
+    </div>
+
+    <div class="search-container">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" class="search-input" id="searchInput"
+               placeholder="Search patients, records, or reports...">
+    </div>
+    
+
+    <div class="user-menu">
+        <button class="header-btn" title="Notifications">
+            <i class="far fa-bell"></i>
+        </button>
+        <button class="header-btn" title="Messages">
+            <i class="far fa-envelope"></i>
+        </button>
+        <div class="user-avatar" title="User Profile">JD</div>
+    </div>
+</header>
+
+<!-- Sidebar -->
+<nav class="sidebar" id="sidebar">
+    <ul class="sidebar-menu">
+        <li class="sidebar-title">Main</li>
+        <li class="sidebar-item">
+            <!-- ✅ FIXED -->
+            <a th:href="@{/}" class="sidebar-link active">
+                <i class="fas fa-user-injured sidebar-icon"></i>
+                <span>Patients</span>
+            </a>
+        </li>
+
+        <li class="sidebar-title">Management</li>
+        <li class="sidebar-item">
+            <a th:href="@{/settings/customize}" class="sidebar-link">
+                <i class="fas fa-sliders-h sidebar-icon"></i>
+                <span>Customize</span>
+            </a>
+        </li>
+
+        <li class="sidebar-item">
+            <a th:href="@{/settings}" class="sidebar-link">
+                <i class="fas fa-cog sidebar-icon"></i>
+                <span>Settings</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+<!-- Main Content -->
+<main class="content" id="mainContent">
+    <div class="content-header">
+        <div>
+            <h1 class="page-title">Patient Management</h1>
+            <p class="page-subtitle">View and manage all patient records</p>
+        </div>
+        <button class="new-btn"
+		        onclick="window.location.href='/patients/new'">
+		    <span class="plus">+</span> New Patient
+		</button>
+
+    </div>
+
+    <div class="table-container">
+        <div class="table-header">
+            <h2 class="table-title">Master Patient Table</h2>
+            <div class="table-actions">
+                <button class="table-action-btn">
+                    <i class="fas fa-download"></i> Export
+                </button>
+                <button class="table-action-btn">
+                    <i class="fas fa-filter"></i> Filter
+                </button>
+                <button class="table-action-btn" id="manageColumnsBtn">
+                    <i class="fas fa-columns"></i> Manage Columns
+                </button>
+            </div>
+        </div>
+
+        <table class="data-table" id="patientTable">
+			            <thead>
+			<tr>
+			    <th>Patient ID</th>
+			    <th>Patient Name</th>
+			    <th>Gender</th>
+			    <th>Address</th>
+			    <th>Village</th>
+			
+			    <!-- 🔥 CUSTOM FIELDS -->
+			    <th th:each="field : ${customFields}"
+			        th:text="${field.labelName}">
+			    </th>
+			
+			    <th>Actions</th>
+			</tr>
+			</thead>
+            
+            <tbody>
+
+<tr th:each="patient : ${patients}">
+
+    <td th:text="${patient.patientId}"></td>
+    <td th:text="${patient.patientName}"></td>
+    <td th:text="${patient.gender}"></td>
+    <td th:text="${patient.address}"></td>
+    <td th:text="${patient.village}"></td>
+
+    <!-- 🔥 CUSTOM FIELD VALUES -->
+    <td th:each="field : ${customFields}">
+        <span th:text="${customValues[patient.patientId][field.id]} ?: '-'"></span>
+    </td>
+
+    <td class="action-icons">
+        <div class="action-icon"><i class="fas fa-eye"></i></div>
+        <div class="action-icon"><i class="fas fa-edit"></i></div>
+        <div class="action-icon"><i class="fas fa-trash-alt"></i></div>
+    </td>
+
+</tr>
+
+<tr th:if="${patients == null or #lists.isEmpty(patients)}">
+    <td colspan="100%" style="text-align:center; padding:20px;">
+        No patient records found
+    </td>
+</tr>
+
+</tbody>
+            
+        </table>
+    </div>
+</main>
+
+<!-- Customize Modal (unchanged, correct) -->
+<div class="modal-overlay" id="customizeModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h2 class="modal-title">Customize Table Columns</h2>
+            <button class="close-modal" id="closeModal">&times;</button>
+        </div>
+
+        <div class="modal-body">
+          <div class="modal-section">
+    <h3 class="modal-section-title">Visible Columns</h3>
+
+    <!-- FIXED COLUMNS -->
+    <label class="column-item">
+        <input type="checkbox" class="column-checkbox" data-column="0" checked disabled>
+        Patient ID (Fixed)
+    </label>
+
+    <label class="column-item">
+        <input type="checkbox" class="column-checkbox" data-column="1" checked disabled>
+        Patient Name (Fixed)
+    </label>
+
+    <label class="column-item">
+        <input type="checkbox" class="column-checkbox" data-column="2" checked>
+        Gender
+    </label>
+
+    <label class="column-item">
+        <input type="checkbox" class="column-checkbox" data-column="3" checked>
+        Address
+    </label>
+
+    <label class="column-item">
+        <input type="checkbox" class="column-checkbox" data-column="4" checked>
+        Village
+    </label>
+
+    <!-- 🔥 DYNAMIC CUSTOM FIELDS -->
+    <label class="column-item"
+           th:each="field, stat : ${customFields}">
+        <input type="checkbox"
+               class="column-checkbox"
+               th:attr="data-column=${5 + stat.index}"
+               checked>
+        <span th:text="${field.labelName}"></span>
+    </label>
+
+    <label class="column-item">
+        <input type="checkbox" class="column-checkbox"
+               th:attr="data-column=${5 + #lists.size(customFields)}"
+               checked disabled>
+        Actions
+    </label>
+</div>
+          
+        <div class="modal-footer">
+            <button class="btn btn-secondary" id="resetColumns">Reset to Default</button>
+            <button class="btn btn-primary" id="applyColumns">Apply Changes</button>
+        </div>
+    </div>
+</div>
+
+<!-- JS -->
+<script th:src="@{/js/index.js}"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(reg => console.log('PWA Service Worker registered'))
+      .catch(err => console.error('SW registration failed', err));
+  });
+}
+</script>
+
+</body>
+</html>

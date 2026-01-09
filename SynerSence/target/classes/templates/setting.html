@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New Custom Field - Contacts</title>
+    <link rel="stylesheet" th:href="@{/css/setting.css}">
+        <link rel="manifest" href="/manifest.json">
+    
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <h2>All Settings</h2>
+        <ul>
+            <li><a th:href="@{/}">Patient</a></li>
+            <li><a th:href="@{/settings/customize}">Customization</a></li>
+            <li><a th:href="@{/settings}">Settings</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content">
+        <h1>New Custom Field - Contacts</h1>
+
+        <form th:action="@{/custom-field/save}"
+              th:object="${fieldCustomization}"
+              method="post"
+              id="customFieldForm">
+
+            <!-- Label Name -->
+            <div class="form-group">
+                <label>Label Name <span>*</span></label>
+                <input type="text" th:field="*{labelName}" required>
+            </div>
+
+            <!-- Data Type -->
+            <div class="form-group">
+                <label>Data Type <span>*</span></label>
+                <select th:field="*{dataType}" id="dataType" required>
+                    <option value="">Select</option>
+                    <option value="TEXT">Text</option>
+                    <option value="NUMBER">Number</option>
+                    <option value="EMAIL">Email</option>
+                    <option value="DROPDOWN">Dropdown</option>
+                    <option value="MULTI_SELECT">Multiple Selection</option>
+                    <option value="DATE_TIME">Date / Time</option>
+                </select>
+            </div>
+
+            <!-- 🔽 DYNAMIC OPTIONS -->
+            <div id="dynamicFields"></div>
+
+            <!-- Hidden field to store options -->
+            <input type="hidden" name="options" id="options">
+            <input type="hidden" name="options" id="optionsHidden">
+            
+
+            <!-- Mandatory -->
+            <div class="form-group checkbox">
+                <input type="checkbox" th:field="*{mandatory}">
+                <label>Is Mandatory</label>
+            </div>
+
+            <!-- Portal -->
+            <div class="form-group checkbox">
+                <input type="checkbox" th:field="*{portal}">
+                <label>Display in Portal</label>
+            </div>
+
+            <!-- Buttons -->
+            <div class="buttons">
+                <button type="submit" class="btn-save">Save</button>
+                <button type="reset" class="btn-cancel">Cancel</button>
+            </div>
+
+        </form>
+    </main>
+</div>
+
+<script th:src="@{/js/setting.js}"></script>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Field Customization</title>
+
+    <!-- ✅ Correct Spring Boot CSS path -->
+    <link rel="stylesheet" th:href="@{/css/field-customize.css}">
+        <link rel="manifest" href="/manifest.json">
+    
+</head>
+<body>
+
+<div class="app-container">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <h3 class="sidebar-title">All Settings</h3>
+        <ul class="sidebar-menu">
+            <li><a th:href="@{/}">Patient</a></li>
+            <li><a th:href="@{/settings/customize}">Customization</a></li>
+            <li><a th:href="@{/settings}">settings</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <input type="text" placeholder="Search settings (/)" />
+        </div>
+
+        <!-- Header -->
+        <div class="page-header">
+            <h2>Customers and Vendors</h2>
+            <div class="usage">
+                <span>Custom Fields Usage: <b>7/135</b></span>
+                <button>Change Order</button>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <span>General</span>
+            <span class="active">Field Customization</span>
+        </div>
+
+        <!-- Table -->
+        <!-- Table -->
+<table class="field-table">
+    <thead>
+        <tr>
+            <th>ID</th> <!-- New column in front -->
+            <th>FIELD NAME</th>
+            <th>DATA TYPE</th>
+            <th>MANDATORY</th>
+            <th>STATUS</th>
+            <th>DISPLAY IN PORTAL</th>
+        </tr>
+    </thead>
+
+    <!-- ✅ Dynamic rows from backend -->
+    <tbody>
+<tr th:each="field : ${fields}">
+    <td th:text="${field.id}">1</td>
+
+    <!-- ✅ FIXED -->
+    <td th:text="${field.labelName}">Field Name</td>
+
+    <td th:text="${field.dataType}">Data Type</td>
+
+    <td th:text="${field.mandatory ? 'Yes' : 'No'}">No</td>
+
+    <!-- ✅ DERIVED STATUS -->
+    <td th:text="${field.portal ? 'Active' : 'Inactive'}"
+        th:classappend="${field.portal} ? 'active' : 'inactive'">
+        Active
+    </td>
+
+    <td th:text="${field.portal ? 'Yes' : 'No'}"
+        th:classappend="${field.portal} ? 'active' : 'inactive'">
+        No
+    </td>
+</tr>
+</tbody>
+    
+</table>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(reg => console.log('PWA Service Worker registered'))
+      .catch(err => console.error('SW registration failed', err));
+  });
+}
+</script>
+
+</html>
+
+</body>
+</html>

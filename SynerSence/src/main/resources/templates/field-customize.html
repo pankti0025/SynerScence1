@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Field Customization</title>
+
+    <!-- ✅ Correct Spring Boot CSS path -->
+    <link rel="stylesheet" th:href="@{/css/field-customize.css}">
+        <link rel="manifest" href="/manifest.json">
+    
+</head>
+<body>
+
+<div class="app-container">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <h3 class="sidebar-title">All Settings</h3>
+        <ul class="sidebar-menu">
+            <li><a th:href="@{/}">Patient</a></li>
+            <li><a th:href="@{/settings/customize}">Customization</a></li>
+            <li><a th:href="@{/settings}">settings</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <input type="text" placeholder="Search settings (/)" />
+        </div>
+
+        <!-- Header -->
+        <div class="page-header">
+            <h2>Customers and Vendors</h2>
+            <div class="usage">
+                <span>Custom Fields Usage: <b>7/135</b></span>
+                <button>Change Order</button>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <span>General</span>
+            <span class="active">Field Customization</span>
+        </div>
+
+        <!-- Table -->
+        <!-- Table -->
+<table class="field-table">
+    <thead>
+        <tr>
+            <th>ID</th> <!-- New column in front -->
+            <th>FIELD NAME</th>
+            <th>DATA TYPE</th>
+            <th>MANDATORY</th>
+            <th>STATUS</th>
+            <th>DISPLAY IN PORTAL</th>
+        </tr>
+    </thead>
+
+    <!-- ✅ Dynamic rows from backend -->
+    <tbody>
+<tr th:each="field : ${fields}">
+    <td th:text="${field.id}">1</td>
+
+    <!-- ✅ FIXED -->
+    <td th:text="${field.labelName}">Field Name</td>
+
+    <td th:text="${field.dataType}">Data Type</td>
+
+    <td th:text="${field.mandatory ? 'Yes' : 'No'}">No</td>
+
+    <!-- ✅ DERIVED STATUS -->
+    <td th:text="${field.portal ? 'Active' : 'Inactive'}"
+        th:classappend="${field.portal} ? 'active' : 'inactive'">
+        Active
+    </td>
+
+    <td th:text="${field.portal ? 'Yes' : 'No'}"
+        th:classappend="${field.portal} ? 'active' : 'inactive'">
+        No
+    </td>
+</tr>
+</tbody>
+    
+</table>
+
+
+    </main>
+</div>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Field Customization</title>
+
+    <!-- ✅ Correct Spring Boot CSS path -->
+    <link rel="stylesheet" th:href="@{/css/field-customize.css}">
+        <link rel="manifest" href="/manifest.json">
+    
+</head>
+<body>
+
+<div class="app-container">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <h3 class="sidebar-title">All Settings</h3>
+        <ul class="sidebar-menu">
+            <li><a th:href="@{/}">Patient</a></li>
+            <li><a th:href="@{/settings/customize}">Customization</a></li>
+            <li><a th:href="@{/settings}">settings</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <input type="text" placeholder="Search settings (/)" />
+        </div>
+
+        <!-- Header -->
+        <div class="page-header">
+            <h2>Customers and Vendors</h2>
+            <div class="usage">
+                <span>Custom Fields Usage: <b>7/135</b></span>
+                <button>Change Order</button>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <span>General</span>
+            <span class="active">Field Customization</span>
+        </div>
+
+        <!-- Table -->
+        <!-- Table -->
+<table class="field-table">
+    <thead>
+        <tr>
+            <th>ID</th> <!-- New column in front -->
+            <th>FIELD NAME</th>
+            <th>DATA TYPE</th>
+            <th>MANDATORY</th>
+            <th>STATUS</th>
+            <th>DISPLAY IN PORTAL</th>
+        </tr>
+    </thead>
+
+    <!-- ✅ Dynamic rows from backend -->
+    <tbody>
+<tr th:each="field : ${fields}">
+    <td th:text="${field.id}">1</td>
+
+    <!-- ✅ FIXED -->
+    <td th:text="${field.labelName}">Field Name</td>
+
+    <td th:text="${field.dataType}">Data Type</td>
+
+    <td th:text="${field.mandatory ? 'Yes' : 'No'}">No</td>
+
+    <!-- ✅ DERIVED STATUS -->
+    <td th:text="${field.portal ? 'Active' : 'Inactive'}"
+        th:classappend="${field.portal} ? 'active' : 'inactive'">
+        Active
+    </td>
+
+    <td th:text="${field.portal ? 'Yes' : 'No'}"
+        th:classappend="${field.portal} ? 'active' : 'inactive'">
+        No
+    </td>
+</tr>
+</tbody>
+    
+</table>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(reg => console.log('PWA Service Worker registered'))
+      .catch(err => console.error('SW registration failed', err));
+  });
+}
+</script>
+
+</html>
+
+</body>
+
+</html>

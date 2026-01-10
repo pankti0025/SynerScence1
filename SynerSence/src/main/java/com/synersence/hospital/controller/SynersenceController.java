@@ -13,6 +13,7 @@ import com.synersence.hospital.entity.*;
 import com.synersence.hospital.repository.PatientCustomFieldValueRepository;
 import com.synersence.hospital.service.FieldCustomizationService;
 import com.synersence.hospital.service.PatientMasterService;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -22,15 +23,19 @@ public class SynersenceController {
     private final PatientMasterService patientService;
     private final FieldCustomizationService fieldService;
     private final PatientCustomFieldValueRepository customValueRepo;
+    private final JdbcTemplate jdbcTemplate;
+
 
     public SynersenceController(
-            PatientMasterService patientService,
-            FieldCustomizationService fieldService,
-            PatientCustomFieldValueRepository customValueRepo) {
+           PatientMasterService patientService,
+        FieldCustomizationService fieldService,
+        PatientCustomFieldValueRepository customValueRepo,
+        JdbcTemplate jdbcTemplate) {
 
         this.patientService = patientService;
-        this.fieldService = fieldService;
-        this.customValueRepo = customValueRepo;
+    this.fieldService = fieldService;
+    this.customValueRepo = customValueRepo;
+    this.jdbcTemplate = jdbcTemplate;
     }
 
     // ================= DASHBOARD =================
@@ -225,6 +230,7 @@ public String savePatient(
     }
 
 }
+
 
 
 

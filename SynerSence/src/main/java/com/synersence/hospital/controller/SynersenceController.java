@@ -73,29 +73,44 @@ public class SynersenceController {
     }
 
     // ================= SAVE PATIENT =================
-    @PostMapping("/patients/save")
-    public String savePatient(
-            @ModelAttribute PatientMaster patient,
-            HttpServletRequest request) {
+   @PostMapping("/patients/save")
+public String savePatient(
+        @ModelAttribute PatientMaster patient,
+        HttpServletRequest request) {
 
-        patientService.savePatient(patient);
+    // 🔥 FORCE READ AGE & WEIGHT FROM REQUEST
+    String ageParam = request.getParameter("age");
+    String weightParam = request.getParameter("weight");
 
-        List<FieldCustomization> fields = fieldService.getAllFields();
-
-        for (FieldCustomization field : fields) {
-            String value = request.getParameter("custom_" + field.getId());
-
-            if (value != null && !value.trim().isEmpty()) {
-                PatientCustomFieldValue v = new PatientCustomFieldValue();
-                v.setPatientId(patient.getPatientId());
-                v.setField(field);
-                v.setFieldValue(value);
-                customValueRepo.save(v);
-            }
-        }
-
-        return "redirect:/kyc-camera?patientId=" + patient.getPatientId();
+    if (ageParam != null && !ageParam.isEmpty()) {
+        patient.setAge(Integer.parseInt(ageParam));
     }
+
+    if (weightParam != null && !weightParam.isEmpty()) {
+        patient.setWeight(Double.parseDouble(weightParam));
+    }
+
+    // ✅ NOW SAVE PATIENT (age & weight are set)
+    patientService.savePatient(patient);
+
+    // ===== SAVE CUSTOM FIELDS =====
+    List<FieldCustomization> fields = fieldService.getAllFields();
+
+    for (FieldCustomization field : fields) {
+        String value = request.getParameter("custom_" + field.getId());
+
+        if (value != null && !value.trim().isEmpty()) {
+            PatientCustomFieldValue v = new PatientCustomFieldValue();
+            v.setPatientId(patient.getPatientId());
+            v.setField(field);
+            v.setFieldValue(value);
+            customValueRepo.save(v);
+        }
+    }
+
+    return "redirect:/kyc-camera?patientId=" + patient.getPatientId();
+}
+
     @GetMapping("/kyc-camera")
     public String kycCamera(@RequestParam String patientId, Model model) {
 
@@ -196,3 +211,4 @@ public class SynersenceController {
     }
 
 }
+

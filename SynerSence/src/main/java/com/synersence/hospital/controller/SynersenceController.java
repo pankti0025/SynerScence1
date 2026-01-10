@@ -80,9 +80,11 @@ public String addPatientPage(Model model) {
     return "add-patient";
 }
 private String generatePatientId() {
-    long count = patientMasterRepository.count() + 1;
-    return String.format("P%04d", count);
+    Long nextVal = jdbcTemplate.queryForObject(
+        "SELECT nextval('patient_seq')", Long.class);
+    return String.format("P%04d", nextVal);
 }
+
 
     // ================= SAVE PATIENT =================
    @PostMapping("/patients/save")
@@ -223,5 +225,6 @@ public String savePatient(
     }
 
 }
+
 
 

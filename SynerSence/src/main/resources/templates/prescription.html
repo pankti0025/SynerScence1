@@ -175,6 +175,14 @@
            <!--  <td class="label">Case No:</td>
             <td th:text="${caseNo}">----</td> -->
         </tr>
+        <tr>
+    <td class="label">Age:</td>
+    <td th:text="${age != null ? age + ' yrs' : '-'}">--</td>
+
+    <td class="label">Weight:</td>
+    <td th:text="${weight != null ? weight + ' kg' : '-'}">--</td>
+</tr>
+
        
     </table>
 
@@ -228,4 +236,5 @@
 
 </body>
 </html>
+
 

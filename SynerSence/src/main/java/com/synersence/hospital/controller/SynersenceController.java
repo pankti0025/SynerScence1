@@ -65,12 +65,24 @@ public class SynersenceController {
     }
 
     // ================= ADD PATIENT =================
-    @GetMapping("/patients/new")
-    public String addPatientPage(Model model) {
-        model.addAttribute("patient", new PatientMaster());
-        model.addAttribute("customFields", fieldService.getAllFields());
-        return "add-patient";
-    }
+   @GetMapping("/patients/new")
+public String addPatientPage(Model model) {
+
+    PatientMaster patient = new PatientMaster();
+
+    // 🔥 AUTO-GENERATE PATIENT ID
+    String newPatientId = generatePatientId();
+    patient.setPatientId(newPatientId);
+
+    model.addAttribute("patient", patient);
+    model.addAttribute("customFields", fieldService.getAllFields());
+
+    return "add-patient";
+}
+private String generatePatientId() {
+    long count = patientMasterRepository.count() + 1;
+    return String.format("P%04d", count);
+}
 
     // ================= SAVE PATIENT =================
    @PostMapping("/patients/save")
@@ -211,4 +223,5 @@ public String savePatient(
     }
 
 }
+
 

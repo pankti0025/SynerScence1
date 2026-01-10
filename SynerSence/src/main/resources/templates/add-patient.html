@@ -161,6 +161,16 @@
             <input type="text" th:field="*{address}">
         </div>
 
+        	<div class="form-group">
+    <label>Age</label>
+    <input type="number" min="0" th:field="*{age}" required>
+</div>
+
+<div class="form-group">
+    <label>Weight (kg)</label>
+    <input type="number" step="0.1" th:field="*{weight}" required>
+</div>
+
         <!-- CUSTOM FIELDS -->
         <h3>Additional Information</h3>
 
@@ -212,3 +222,4 @@
 </div>
 </body>
 </html>
+
